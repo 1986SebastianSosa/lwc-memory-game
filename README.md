@@ -13,8 +13,8 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 
 ## Screenshots
 
-![Gameplay](screenshots/gameplay.png)
-![Win Modal](screenshots/modal.png)
+![Gameplay](screenshots/memory-game-sc-2.png)
+![Win Modal](screenshots/memory-game-sc-4.png)
 
 ## Technologies Used
 
@@ -56,19 +56,19 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 
 memory-game-lwc/
 ├── force-app/
-│   ├── main/
-│       ├── default/
-│           ├── lwc/
-│           │   ├── MemoryGame_Card/
-│           │   ├── MemoryGame_Tile/
-│           │   ├── MemoryGameModal/
-│           ├── staticresources/
-│               ├── fontawesome/
+│ ├── main/
+│ ├── default/
+│ ├── lwc/
+│ │ ├── MemoryGame_Card/
+│ │ ├── MemoryGame_Tile/
+│ │ ├── MemoryGameModal/
+│ ├── staticresources/
+│ ├── fontawesome/
 ├── manifest/
-│   ├── package.xml
+│ ├── package.xml
 ├── screenshots/
-│   ├── gameplay.png
-│   ├── modal.png
+│ ├── gameplay.png
+│ ├── modal.png
 ├── .gitattributes
 ├── .gitignore
 ├── LICENSE
@@ -80,7 +80,6 @@ memory-game-lwc/
 - **Modal Not Rendering Correctly**: Fixed by switching from template-based modal rendering to programmatic `LightningModal.open()`, ensuring proper display and close functionality for the win modal.
 - **3D Animation Compatibility**: Ensured smooth card flip animations across browsers and Salesforce’s mobile app by adding vendor prefixes (`-webkit-transform`) and `backface-visibility: hidden`, addressing Shadow DOM constraints.
 
-
 - Add high-score tracking with Salesforce Apex for persistent data storage.
 - Implement difficulty levels (e.g., 6x6 grid).
 - Enhance UI with animations (e.g., card shake on mismatch) or sound effects.
@@ -88,5 +87,3 @@ memory-game-lwc/
 ## Contact
 
 [Sebastian Sosa] - [1986sebastiansosa@gmail.com](mailto:1986sebastiansosa@gmail.com) | [LinkedIn Profile](https://www.linkedin.com/in/sebastian-sosa-cinotti/)
-
-
