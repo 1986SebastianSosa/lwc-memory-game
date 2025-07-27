@@ -82,6 +82,8 @@ memory-game-lwc/
 - **Modal Not Rendering Correctly**: Fixed by switching from template-based modal rendering to programmatic `LightningModal.open()`, ensuring proper display and close functionality for the win modal.
 - **3D Animation Compatibility**: Ensured smooth card flip animations across browsers and Salesforce’s mobile app by adding vendor prefixes (`-webkit-transform`) and `backface-visibility: hidden`, addressing Shadow DOM constraints.
 
+## Future Improvements
+
 - Add high-score tracking with Salesforce Apex for persistent data storage.
 - Implement difficulty levels (e.g., 6x6 grid).
 - Enhance UI with animations (e.g., card shake on mismatch) or sound effects.
