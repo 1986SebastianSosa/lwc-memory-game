@@ -54,6 +54,7 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 
 ## Project Structure
 
+```
 memory-game-lwc/
 ├── force-app/
 │ ├── main/
@@ -74,6 +75,7 @@ memory-game-lwc/
 ├── LICENSE
 ├── sfdx-project.json
 ├── README.md
+```
 
 ## Challenges Overcome
 
