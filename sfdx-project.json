@@ -3,7 +3,8 @@
     {
       "path": "force-app",
       "default": true
-    }
+    },
+    { "path": "manifest" }
   ],
   "name": "zero_to_hero_in_lwc",
   "namespace": "",
