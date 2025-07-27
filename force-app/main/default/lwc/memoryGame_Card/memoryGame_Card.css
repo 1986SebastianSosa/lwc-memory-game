@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.card-container {
+  padding: 16px;
+}
+
+.card-container ul {
+  border-radius: 6px;
+  box-shadow: 1px 1px 15px grey;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.card,
+.metrics {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metrics {
+  gap: 16px;
+}
+
+.reset-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-btn:hover {
+  box-shadow: 1px 1px 5px grey;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 4fr);
+  grid-template-rows: repeat(4, 4fr);
+  gap: 16px;
+  background-color: #111344;
+  padding: 16px;
+}

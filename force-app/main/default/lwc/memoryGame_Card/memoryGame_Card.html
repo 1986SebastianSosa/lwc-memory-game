@@ -1,0 +1,25 @@
+<template>
+    <div class="container">
+        <lightning-card title="Memory Game">
+            <div class="card-container">
+                <section class="heading">
+                    <div class="metrics">
+                        <div><strong>Move(s): </strong>{moves} </div>
+                        <div><strong>Time: </strong>{timer}</div>
+                    </div>
+                    <div class="reset-btn" onclick={resetGame}>
+                        <i class="fa fa-repeat fa-lg"></i>
+                    </div>
+                </section>
+                <section>
+                    <ul class="grid">
+                        <template for:each={cards} for:item="card">
+                            <c-memory-game-tile key={card.id} card={card} id={card.id}
+                                onflipped={handleFlipped}></c-memory-game-tile>
+                        </template>
+                    </ul>
+                </section>
+            </div>
+        </lightning-card>
+    </div>
+</template>
