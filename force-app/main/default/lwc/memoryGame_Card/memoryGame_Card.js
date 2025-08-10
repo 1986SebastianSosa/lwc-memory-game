@@ -5,10 +5,14 @@
  */
 
 /* eslint-disable @lwc/lwc/no-async-operation */
-import { LightningElement } from "lwc";
+import { LightningElement, wire } from "lwc";
 import { loadStyle } from "lightning/platformResourceLoader";
 import FONT_AWESOME from "@salesforce/resourceUrl/fontawesome";
 import MemoryGameModal from "c/memoryGameModal";
+import saveMemoryGame from "@salesforce/apex/MemoryGameResultController.saveMemoryGame";
+import userId from "@salesforce/user/Id";
+import MEMORY_GAME_MESSAGE_CHANNEL from "@salesforce/messageChannel/memoryGame__c";
+import { publish, MessageContext } from "lightning/messageService";
 
 export default class MemoryGame_Card extends LightningElement {
   // State variables for game logic
@@ -21,6 +25,8 @@ export default class MemoryGame_Card extends LightningElement {
   cardsMatched = []; // Stores matched card pairs
   interval; // Timer interval
   timer; // Formatted timer string (HH:MM:SS)
+  @wire(MessageContext)
+  context;
 
   // Initial card data with 8 icon pairs for matching
   unshuffledCards = [
@@ -108,7 +114,8 @@ export default class MemoryGame_Card extends LightningElement {
 
   /* Initialize shuffled cards and timer on component load */
   connectedCallback() {
-    this.cards = this.shuffleCards(this.unshuffledCards);
+    // this.cards = this.shuffleCards(this.unshuffledCards);
+    this.cards = this.unshuffledCards;
     this.setTimer();
   }
 
@@ -121,7 +128,6 @@ export default class MemoryGame_Card extends LightningElement {
       this,
       FONT_AWESOME + "/fontawesome/css/font-awesome.min.css"
     ).then(() => {
-      console.log("library loaded");
       this.isLibraryLoaded = true;
     });
   }
@@ -129,7 +135,7 @@ export default class MemoryGame_Card extends LightningElement {
   /* Handle card flip events from child components
    * @param {CustomEvent} e - Event with card id and type
    */
-  handleFlipped(e) {
+  async handleFlipped(e) {
     if (!this.isTimerStarted) {
       this.startTimer();
       this.isTimerStated = true;
@@ -149,6 +155,19 @@ export default class MemoryGame_Card extends LightningElement {
         for (const card of this.cardsFlipped) {
           this.cardsMatched.push(card);
           if (this.cardsMatched.length === 16) {
+            try {
+              // Saves the result to a Memory_Game_Result__c record
+              await saveMemoryGame({
+                seconds: this.seconds,
+                moves: this.moves,
+                player: userId
+              });
+              // Mesagges the results table component to update the data
+              this.updateResultsTable();
+            } catch (error) {
+              console.log(error);
+            }
+
             // All cards are matched. Game won
             setTimeout(() => {
               this.openWinModal();
@@ -271,7 +290,12 @@ export default class MemoryGame_Card extends LightningElement {
   }
   /* Reset game state when modal closes or reset button is clicked */
   handleCloseModal() {
-    console.log("handle Close Modal");
     this.resetGame();
+  }
+
+  updateResultsTable() {
+    publish(this.context, MEMORY_GAME_MESSAGE_CHANNEL, {
+      isGameCompleted: true
+    });
   }
 }

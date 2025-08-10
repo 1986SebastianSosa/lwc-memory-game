@@ -13,7 +13,6 @@ export default class MemoryGameModal extends LightningModal {
 
   /* Close modal and return 'ok' result to parent */
   handleCloseModal() {
-    console.log("handle Close Modal");
     this.close("ok");
   }
 }

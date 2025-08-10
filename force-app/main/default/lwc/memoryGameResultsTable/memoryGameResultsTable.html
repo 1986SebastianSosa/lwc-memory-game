@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title="Memory Game Results">
+        <template lwc:if={games}>
+            <lightning-datatable key-field="id" data={games} columns={columns} hide-checkbox-column
+                column-widths-mode="auto">
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>
