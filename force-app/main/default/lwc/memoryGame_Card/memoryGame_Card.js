@@ -33,89 +33,89 @@ export default class MemoryGame_Card extends LightningElement {
     {
       id: 1,
       iconClass: "fa fa-bug fa-2x",
-      type: "bug"
+      type: "bug",
     },
     {
       id: 2,
       iconClass: "fa fa-binoculars fa-2x",
-      type: "binoculars"
+      type: "binoculars",
     },
     {
       id: 3,
       iconClass: "fa fa-birthday-cake fa-2x",
-      type: "birthday-cake"
+      type: "birthday-cake",
     },
     {
       id: 4,
       iconClass: "fa fa-calculator fa-2x",
-      type: "calculator"
+      type: "calculator",
     },
     {
       id: 5,
       iconClass: "fa fa-flask fa-2x",
-      type: "flask"
+      type: "flask",
     },
     {
       id: 6,
       iconClass: "fa fa-hourglass-end fa-2x",
-      type: "hourglass"
+      type: "hourglass",
     },
     {
       id: 7,
       iconClass: "fa fa-heart fa-2x",
-      type: "heart"
+      type: "heart",
     },
     {
       id: 8,
       iconClass: "fa fa-eye fa-2x",
-      type: "eye"
+      type: "eye",
     },
     {
       id: 9,
       iconClass: "fa fa-bug fa-2x",
-      type: "bug"
+      type: "bug",
     },
     {
       id: 10,
       iconClass: "fa fa-binoculars fa-2x",
-      type: "binoculars"
+      type: "binoculars",
     },
     {
       id: 11,
       iconClass: "fa fa-birthday-cake fa-2x",
-      type: "birthday-cake"
+      type: "birthday-cake",
     },
     {
       id: 12,
       iconClass: "fa fa-calculator fa-2x",
-      type: "calculator"
+      type: "calculator",
     },
     {
       id: 13,
       iconClass: "fa fa-flask fa-2x",
-      type: "flask"
+      type: "flask",
     },
     {
       id: 14,
       iconClass: "fa fa-hourglass-end fa-2x",
-      type: "hourglass"
+      type: "hourglass",
     },
     {
       id: 15,
       iconClass: "fa fa-heart fa-2x",
-      type: "heart"
+      type: "heart",
     },
     {
       id: 16,
       iconClass: "fa fa-eye fa-2x",
-      type: "eye"
-    }
+      type: "eye",
+    },
   ];
 
   /* Initialize shuffled cards and timer on component load */
   connectedCallback() {
-    // this.cards = this.shuffleCards(this.unshuffledCards);
-    this.cards = this.unshuffledCards;
+    this.cards = this.shuffleCards(this.unshuffledCards);
+    // this.cards = this.unshuffledCards;
     this.setTimer();
   }
 
@@ -160,7 +160,7 @@ export default class MemoryGame_Card extends LightningElement {
               await saveMemoryGame({
                 seconds: this.seconds,
                 moves: this.moves,
-                player: userId
+                player: userId,
               });
               // Mesagges the results table component to update the data
               this.updateResultsTable();
@@ -253,7 +253,10 @@ export default class MemoryGame_Card extends LightningElement {
     const hours = Math.floor(this.seconds / 3600);
     const minutes = Math.floor((this.seconds % 3600) / 60);
     const seconds = Math.floor(this.seconds % 60);
-    this.timer = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    this.timer = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}:${String(seconds).padStart(2, "0")}`;
   }
 
   // Adds a second and updates the timer
@@ -282,7 +285,7 @@ export default class MemoryGame_Card extends LightningElement {
       label: "Game Won",
       moves: this.moves,
       timer: this.timer,
-      size: "small"
+      size: "small",
     });
     if (result === "ok") {
       this.handleCloseModal();
@@ -295,7 +298,7 @@ export default class MemoryGame_Card extends LightningElement {
 
   updateResultsTable() {
     publish(this.context, MEMORY_GAME_MESSAGE_CHANNEL, {
-      isGameCompleted: true
+      isGameCompleted: true,
     });
   }
 }

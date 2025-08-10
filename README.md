@@ -10,11 +10,15 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 - Modal popup on game completion with win details.
 - Reset button to restart the game with shuffled cards.
 - Responsive design with CSS Grid, maintaining square cards.
+- Saves game results (player, moves, time, date) to a custom `Memory_Game_Result__c` object.
+- Displays top game results in a `lightning-datatable`, ranked by moves and time.
+- Uses Lightning Message Service to refresh the results table when a game is completed.
 
 ## Screenshots
 
 ![Gameplay](screenshots/memory-game-sc-2.png)
 ![Win Modal](screenshots/memory-game-sc-4.png)
+![Results Table](screenshots/memory-game-results-table.png)
 
 ## Technologies Used
 
@@ -23,6 +27,8 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 - **CSS 3D Transforms**: Y-axis flip animations for card interactions.
 - **Font Awesome**: Icons for card fronts, loaded via static resource.
 - **Salesforce CLI (SFDX)**: Deployment to Salesforce org.
+- **Apex**: Controller to save and retrieve game results from `Memory_Game_Result__c`.
+- **Lightning Message Service (LMS)**: Real-time communication between game and results components.
 
 ## Setup Instructions
 
@@ -36,20 +42,29 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 - sfdx force:auth:web:login -a my-org
 
 3. **Deploy to Org**:
+```
+sfdx force:source:deploy -p force-app/main/default
+```
+- This deploys the Memory_Game_Result__c custom object, fields, Apex controller, LWCs, and message channel.
 
-- sfdx force:source:deploy -p force-app/main/default
+4. **Grant Permissions**
 
-4. **Add to Lightning Page**:
+- Go to Setup > Profiles > [User Profile] or create a permission set to add permission to the App
+- Grant:Read/Create on Memory_Game_Result__c object and fields (Player__c, Moves__c, Time__c, Completed_on__c).
+- Apex Class Access: MemoryGameResultController.
+
+5. **Add to Lightning Page**:
 
 - Go to Setup > Lightning App Builder.
 - Create or edit a Lightning Page (e.g., App Page or Home Page).
-- Drag the MemoryGame_Card component onto the page.
+- Drag the MemoryGame_Card and MemoryGameResultsTable component onto the page.
 - Save and activate.
 
-5. **Play the Game**:
+6. **Play the Game**:
 
 - Navigate to the Lightning Page in your Salesforce org.
 - Flip cards to match pairs. A modal appears when all 16 cards are matched.
+- Game results are saved and displayed in the results table, ranked by moves and time.
 - Use the Reset button to start a new game.
 
 ## Project Structure
@@ -57,23 +72,33 @@ A 4x4 memory game built with Salesforce Lightning Web Components (LWC). Players 
 ```
 memory-game-lwc/
 ├── force-app/
-│ ├── main/
-│ ├── default/
-│ ├── lwc/
-│ │ ├── MemoryGame_Card/
-│ │ ├── MemoryGame_Tile/
-│ │ ├── MemoryGameModal/
-│ ├── staticresources/
-│ ├── fontawesome/
-├── manifest/
-│ ├── package.xml
+│   ├── main/
+│   ├── default/
+│   │   ├── classes/
+│   │   │   ├── MemoryGameResultController.cls
+│   │   │   ├── MemoryGameResultController.cls-meta.xml
+│   │   ├── lwc/
+│   │   │   ├── MemoryGame_Card/
+│   │   │   ├── MemoryGame_Tile/
+│   │   │   ├── MemoryGameModal/
+│   │   │   ├── MemoryGameResultsTable/
+│   │   ├── messageChannels/
+│   │   │   ├── memoryGame.messageChannel-meta.xml
+│   │   ├── objects/
+│   │   │   ├── Memory_Game_Result__c/
+│   │   ├── staticresources/
+│   │   │   ├── fontawesome/
+│   ├── manifest/
+│   │   ├── package.xml
 ├── screenshots/
-│ ├── gameplay.png
-│ ├── modal.png
+│   ├── gameplay.png
+│   ├── modal.png
+│   ├── memory-game-results-table.png
 ├── .gitattributes
 ├── .gitignore
 ├── LICENSE
 ├── sfdx-project.json
+├── package.json
 ├── README.md
 ```
 
@@ -81,10 +106,10 @@ memory-game-lwc/
 
 - **Modal Not Rendering Correctly**: Fixed by switching from template-based modal rendering to programmatic `LightningModal.open()`, ensuring proper display and close functionality for the win modal.
 - **3D Animation Compatibility**: Ensured smooth card flip animations across browsers and Salesforce’s mobile app by adding vendor prefixes (`-webkit-transform`) and `backface-visibility: hidden`, addressing Shadow DOM constraints.
+- **User Access Issues**: Resolved 500 errors by granting Apex class (MemoryGameResultController) and object (Memory_Game_Result__c) permissions to users via profiles or permission sets.
 
 ## Future Improvements
 
-- Add high-score tracking with Salesforce Apex for persistent data storage.
 - Implement difficulty levels (e.g., 6x6 grid).
 - Enhance UI with animations (e.g., card shake on mismatch) or sound effects.
 
