@@ -6,7 +6,7 @@
     },
     { "path": "manifest" }
   ],
-  "name": "memory_game_project_lwc",
+  "name": "lwc_memory_game",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "64.0"
