@@ -6,7 +6,7 @@
     },
     { "path": "manifest" }
   ],
-  "name": "zero_to_hero_in_lwc",
+  "name": "memory_game_project_lwc",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "64.0"
